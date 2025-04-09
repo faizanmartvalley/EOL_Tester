@@ -11,7 +11,7 @@ exports.databaseConnection = (filePath) => {
                 return reject(new Error(`Error while connecting to SQLite database: ${err.message}`));
             }
 
-            console.log(`Connected to SQLite database: ${filePath}`);
+            // console.log(`Connected to SQLite database: ${filePath}`);
             resolve(db);
         });
     });

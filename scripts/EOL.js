@@ -5,6 +5,7 @@ const { processExcel } = require("../utils/Read_EOL_Exclel");
 
 
 const directoryPath = "C:/Users/LENOVO/Desktop/Cygni Data";
+// const directoryPath = "C:/Users/Martvalley/OneDrive/Desktop/Cygni Data"
 
 let orderID = "";
 
@@ -28,7 +29,7 @@ exports.scan_OK_Files = async () => {
 
             if (!normalizeFilenames.includes(normalizeFileName)) {
                 const fileData = await processExcel(filePath);
-                const response = await fetch("http://192.168.31.242:3000/machine/EOL-data", {
+                const response = await fetch("https://cygni.dnanetra.com/machine/EOL-data", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -44,9 +45,9 @@ exports.scan_OK_Files = async () => {
                     console.log("File data sent to MES and saved", new Date().toLocaleString());
                 }
             }
-            else {
-                console.log("Already read this file");
-            }
+            // else {
+            //     console.log("Already read this file");
+            // }
         }
     } catch (error) {
         console.error("Error processing file", error);
@@ -73,7 +74,7 @@ exports.scan_NG_Files = async () => {
 
             if (!normalizeFilenames.includes(normalizeFileName)) {
                 const fileData = await processExcel(filePath);
-                const response = await fetch("http://192.168.31.242:3000/machine/EOL-data", {
+                const response = await fetch("https://cygni.dnanetra.com/machine/EOL-data", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -100,7 +101,7 @@ exports.scan_NG_Files = async () => {
 
 exports.post_orderId = async (req, res) => {
     try {
-        const { order } =  req.params;
+        const { order } = req.params;
 
         if (!order) {
             return res.status(400).json({
