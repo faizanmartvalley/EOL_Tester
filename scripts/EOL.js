@@ -6,7 +6,7 @@ const { processExcel } = require("../utils/Read_EOL_Exclel");
 
 const directoryPath = "C:/Users/LENOVO/Desktop/Cygni Data";
 
-let orderID = "67c00fd2b21564fb66afe28b";
+let orderID = "";
 
 exports.scan_OK_Files = async () => {
     try {
@@ -101,7 +101,7 @@ exports.scan_NG_Files = async () => {
 exports.post_orderId = async (req, res) => {
     try {
         const { order } =  req.params;
-         
+
         if (!order) {
             return res.status(400).json({
                 success: false,
