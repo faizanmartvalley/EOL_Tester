@@ -1,0 +1,30 @@
+{
+  "name": "eol_tester",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": {
+    "EOL-express-app": "./app.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "pkg . --targets node18-win-x64 --output dist/EOL_Tester"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "pkg": "^5.8.1",
+    "sqlite3": "^5.1.7",
+    "xlsx": "^0.18.5"
+  },
+  "pkg": {
+    "scripts": [],
+    "assets": [
+      "public/**/*"
+    ]
+  }
+}
