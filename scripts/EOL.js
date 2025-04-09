@@ -100,7 +100,8 @@ exports.scan_NG_Files = async () => {
 
 exports.post_orderId = async (req, res) => {
     try {
-        const { order } = req.body;
+        const { order } =  req.params;
+         
         if (!order) {
             return res.status(400).json({
                 success: false,
