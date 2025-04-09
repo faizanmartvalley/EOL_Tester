@@ -4,9 +4,9 @@ const { fetchFilenames, insertFilename } = require("../utils/helpers");
 const { processExcel } = require("../utils/Read_EOL_Exclel");
 
 
-const directoryPath = "C:/Users/Martvalley/OneDrive/Desktop/Cygni Data";
+const directoryPath = "C:/Users/LENOVO/Desktop/Cygni Data";
 
-let orderID = "";
+let orderID = "67c00fd2b21564fb66afe28b";
 
 exports.scan_OK_Files = async () => {
     try {
@@ -14,7 +14,7 @@ exports.scan_OK_Files = async () => {
             console.log("Order ID not found");
             return;
         }
-        const fileDir = path.join(directoryPath, "Test");
+        const fileDir = path.join(directoryPath, "OK");
         const files = await fs.readdir(fileDir);
         const excelFiles = files.filter(file => path.extname(file).toLowerCase() === ".xls");
         const processedFiles = await fetchFilenames(fileDir);
@@ -44,9 +44,9 @@ exports.scan_OK_Files = async () => {
                     console.log("File data sent to MES and saved", new Date().toLocaleString());
                 }
             }
-            // else {
-            //     console.log("Already read this file");
-            // }
+            else {
+                console.log("Already read this file");
+            }
         }
     } catch (error) {
         console.error("Error processing file", error);
