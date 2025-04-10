@@ -4,8 +4,8 @@ const { fetchFilenames, insertFilename } = require("../utils/helpers");
 const { processExcel } = require("../utils/Read_EOL_Exclel");
 
 
-const directoryPath = "C:/Users/LENOVO/Desktop/Cygni Data";
-// const directoryPath = "C:/Users/Martvalley/OneDrive/Desktop/Cygni Data"
+// const directoryPath = "C:/Users/LENOVO/Desktop/Cygni Data";
+const directoryPath = "C:/Users/Martvalley/OneDrive/Desktop/Cygni Data"
 
 let orderID = "";
 
@@ -36,7 +36,7 @@ exports.scan_OK_Files = async () => {
                         "Accept": "application/json"
                     },
                     body: JSON.stringify({
-                        ...fileData, orderId: orderID
+                        ...fileData, status: "OK", orderId: orderID
                     })
                 });
                 const responseData = await response.json();
@@ -44,10 +44,13 @@ exports.scan_OK_Files = async () => {
                     await insertFilename(filePath, fileDir);
                     console.log("File data sent to MES and saved", new Date().toLocaleString());
                 }
+                else {
+                    throw new Error(`${responseData.data}`);
+                }
             }
-            // else {
-            //     console.log("Already read this file");
-            // }
+            else {
+                console.log("Already read this file");
+            }
         }
     } catch (error) {
         console.error("Error processing file", error);
@@ -81,13 +84,16 @@ exports.scan_NG_Files = async () => {
                         "Accept": "application/json"
                     },
                     body: JSON.stringify({
-                        ...fileData, orderId: orderID
+                        ...fileData, status: "NG", orderId: orderID
                     })
                 });
                 const responseData = await response.json();
                 if (responseData?.status == 200) {
                     await insertFilename(filePath, fileDir);
                     console.log("File data sent to MES and saved", new Date().toLocaleString());
+                }
+                else {
+                    throw new Error(`${responseData.data}`);
                 }
             }
             // else {
