@@ -8,11 +8,10 @@ const { processExcel } = require("../utils/Read_EOL_Exclel");
 const directoryPath = "C:/Users/Martvalley/OneDrive/Desktop/Cygni Data"
 
 let orderID = "";
-
 exports.scan_OK_Files = async () => {
     try {
         if (!orderID) {
-            console.log("Order ID not found");
+            console.log("Order ID not found",new Date().toLocaleString());
             return;
         }
         const fileDir = path.join(directoryPath, "OK");
@@ -48,9 +47,9 @@ exports.scan_OK_Files = async () => {
                     throw new Error(`${responseData.data}`);
                 }
             }
-            else {
-                console.log("Already read this file");
-            }
+            // else {
+            //     console.log("Already read this file");
+            // }
         }
     } catch (error) {
         console.error("Error processing file", error);
@@ -60,7 +59,7 @@ exports.scan_OK_Files = async () => {
 exports.scan_NG_Files = async () => {
     try {
         if (!orderID) {
-            console.log("Order ID not found");
+            console.log("Order ID not found", new Date().toLocaleString());
             return;
         }
         const fileDir = path.join(directoryPath, "NG");
