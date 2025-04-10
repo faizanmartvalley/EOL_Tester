@@ -83,6 +83,13 @@ exports.scan_NG_Files = async () => {
 
             if (!normalizeFilenames.includes(normalizeFileName)) {
                 const fileData = await processExcel(filePath);
+
+                if (!fileData?.BarCode) {
+                    console.error("Bar code is missing in", file);
+                    await insertFilename(filePath, fileDir);
+                    continue;
+                }
+
                 const response = await fetch("https://cygni.dnanetra.com/machine/EOL-data", {
                     method: "POST",
                     headers: {
