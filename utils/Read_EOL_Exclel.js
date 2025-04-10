@@ -23,8 +23,8 @@ exports.processExcel = async (filePath) => {
         let scheme = (schemeIndex !== -1) ? jsonData[1][schemeIndex + 1] : "Not Found";
 
         let structuredData = {
-            BarCode: barCode || "Not Found",
-            Scheme: scheme || "Not Found",
+            BarCode: barCode,
+            Scheme: scheme,
             TestItems: []
         };
 

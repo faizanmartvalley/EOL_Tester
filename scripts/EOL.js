@@ -4,14 +4,14 @@ const { fetchFilenames, insertFilename } = require("../utils/helpers");
 const { processExcel } = require("../utils/Read_EOL_Exclel");
 
 
-// const directoryPath = "C:/Users/LENOVO/Desktop/Cygni Data";
-const directoryPath = "C:/Users/Martvalley/OneDrive/Desktop/Cygni Data"
+const directoryPath = "C:/Users/LENOVO/Desktop/Cygni Data";
+// const directoryPath = "C:/Users/Martvalley/OneDrive/Desktop/Cygni Data"
 
 let orderID = "";
 exports.scan_OK_Files = async () => {
     try {
         if (!orderID) {
-            console.log("Order ID not found",new Date().toLocaleString());
+            console.log("Order ID not found", new Date().toLocaleString());
             return;
         }
         const fileDir = path.join(directoryPath, "OK");
@@ -28,6 +28,13 @@ exports.scan_OK_Files = async () => {
 
             if (!normalizeFilenames.includes(normalizeFileName)) {
                 const fileData = await processExcel(filePath);
+
+                if (!fileData?.BarCode) {
+                    console.error("Bar code is missing in", file);
+                    await insertFilename(filePath, fileDir);
+                    continue;
+                }
+
                 const response = await fetch("https://cygni.dnanetra.com/machine/EOL-data", {
                     method: "POST",
                     headers: {
