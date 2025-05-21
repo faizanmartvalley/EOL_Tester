@@ -9,6 +9,6 @@ router.get("/order-id", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "public", "page.html"));
 });
 
-router.post("/order-id/:order", post_orderId);
+router.post("/order-id/order", post_orderId);
 
 module.exports = router;

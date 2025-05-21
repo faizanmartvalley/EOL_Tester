@@ -1,6 +1,6 @@
 async function fetchOrders() {
   try {
-    const response = await fetch("https://cygni.dnanetra.com/processed-orders");
+    const response = await fetch("http://localhost:3000/processed-orders");
     if (!response.ok) throw new Error("Failed to fetch orders.");
 
     const result = await response.json();
@@ -11,11 +11,11 @@ async function fetchOrders() {
     result.data.forEach(order => {
       const option = document.createElement("option");
       option.value = order._id;
-      option.textContent = `🆔 Order: ${order._id}`;
+      option.textContent = `${order._id}`;
       dropdown.appendChild(option);
     });
   } catch (error) {
-    showError(`❌ ${error.message}`);
+    showError(` ${error.message}`);
   }
 }
 
@@ -42,7 +42,7 @@ window.onload = function () {
     if (!selectedOrderId) return;
 
     try {
-      const response = await fetch(`http://localhost:8000/order-id/${selectedOrderId}`, {
+      const response = await fetch(`http://localhost:8000/order-id/order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ orderId: selectedOrderId })
@@ -56,7 +56,7 @@ window.onload = function () {
       showSuccess(`✅ Order ${selectedOrderId} submitted successfully!`);
     } catch (error) {
       console.error("Submission Error:", error);
-      showError(`❌ ${error.message}`);
+      showError(` ${error.message}`);
     }
   });
 };

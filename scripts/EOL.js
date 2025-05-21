@@ -42,7 +42,7 @@ exports.scan_OK_Files = async () => {
                     continue;
                 }
 
-                const response = await fetch("https://cygni.dnanetra.com/machine/EOL-data", {
+                const response = await fetch("https://mes.cygni.com/machine/EOL-data", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -103,7 +103,7 @@ exports.scan_NG_Files = async () => {
                     continue;
                 }
 
-                const response = await fetch("https://cygni.dnanetra.com/machine/EOL-data", {
+                const response = await fetch("https://mes.cygni.com/machine/EOL-data", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -134,15 +134,14 @@ exports.scan_NG_Files = async () => {
 
 exports.post_orderId = async (req, res) => {
     try {
-        const { order } = req.params;
-
-        if (!order) {
+        const { orderId } = req.body; 
+        if (!orderId) {
             return res.status(400).json({
                 success: false,
                 message: "Order ID is required.."
             })
         }
-        orderID = order;
+        orderID = orderId;
         return res.status(200).json({
             success: true,
             message: "Order ID saved successfuly..!"
