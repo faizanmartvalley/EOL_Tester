@@ -5,8 +5,8 @@ const { processExcel } = require("../utils/Read_EOL_Exclel");
 const { logError } = require("../utils/errorLog");
 
 
-// const directoryPath = "C:/Users/LENOVO/Desktop/Cygni Data";
-const directoryPath = "C:/Users/Martvalley/OneDrive/Desktop/Cygni Data"
+const directoryPath = "C:/Users/LENOVO/Desktop/Cygni Data";
+// const directoryPath = "C:/Users/Martvalley/OneDrive/Desktop/Cygni Data"
 
 let orderID = "";
 let hasLogged = false;
@@ -19,6 +19,7 @@ exports.scan_OK_Files = async () => {
         if (!hasLogged) {
             console.log("Order ID configured, Started processing files", new Date().toLocaleString());
         }
+        hasLogged = true;
         const fileDir = path.join(directoryPath, "OK");
         const files = await fs.readdir(fileDir);
         const excelFiles = files.filter(file => path.extname(file).toLowerCase() === ".xls");
@@ -76,6 +77,10 @@ exports.scan_NG_Files = async () => {
             console.log("Order ID not found", new Date().toLocaleString());
             return;
         }
+        if (!hasLogged) {
+            console.log("Order ID configured, Started processing files", new Date().toLocaleString());
+        }
+        hasLogged = true;
         const fileDir = path.join(directoryPath, "NG");
         const files = await fs.readdir(fileDir);
         const excelFiles = files.filter(file => path.extname(file).toLowerCase() === ".xls");
@@ -98,7 +103,7 @@ exports.scan_NG_Files = async () => {
                     continue;
                 }
 
-                const response = await fetch("https://cygni.dnanetra.com/machine/EOL-data/machine/EOL-data", {
+                const response = await fetch("https://cygni.dnanetra.com/machine/EOL-data", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -123,7 +128,7 @@ exports.scan_NG_Files = async () => {
         }
     } catch (error) {
         console.error("Error processing file", error, new Date().toLocaleString());
-        logError(`Something went wrong processing file,${err}`);
+        logError(`Something went wrong processing file,${error}`);
     }
 }
 
