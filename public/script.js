@@ -1,6 +1,6 @@
 async function fetchOrders() {
   try {
-    const response = await fetch("http://localhost:3000/processed-orders");
+    const response = await fetch("https://mes.cygni.com/processed-orders");
     if (!response.ok) throw new Error("Failed to fetch orders.");
 
     const result = await response.json();
